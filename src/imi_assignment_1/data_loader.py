@@ -32,8 +32,9 @@ class DataLoader:
         else:
             return self._data[key]
 
-    def random_choice(self) -> np.ndarray:
-        return self._rng.choice(self._data)
+    def random_choice(self) -> tuple[np.ndarray, str]:
+        index = self._rng.integers(self.num_patterns())
+        return self._data[index], self._pattern_names[index]
 
     def num_patterns(self) -> int:
         return self._data.shape[0]
@@ -43,3 +44,6 @@ class DataLoader:
 
     def pattern_shape(self) -> tuple:
         return self._pattern_shape
+
+    def pattern_names(self) -> list[str]:
+        return self._pattern_names
