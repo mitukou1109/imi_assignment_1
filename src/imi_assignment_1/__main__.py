@@ -14,7 +14,7 @@ from .hopfield_network import HopfieldNetwork
 noise_probs = [0.2]
 attempts = 100
 visualize = False
-save_state_transition = True
+save_state_history = False
 
 max_steps = 1e3
 energy_balance_duration = 100
@@ -83,6 +83,9 @@ for i, noise_prob in enumerate(noise_probs):
                 )
                 energy_history_ax.autoscale_view()
 
+        if save_state_history and j == 0:
+            state_history = [net.get_state().copy()]
+
         steps = 0
         while steps < max_steps:
             energy = net()
@@ -99,13 +102,29 @@ for i, noise_prob in enumerate(noise_probs):
                 if plt.get_fignums():
                     update_figure()
                     plt.pause(0.05)
-                else:
-                    exit()
+            if save_state_history and j == 0:
+                state_history.append(net.get_state().copy())
 
             steps += 1
 
         if visualize:
-            plt.close("all")
+            plt.show()
+
+        if save_state_history and j == 0:
+            max_cols = 10
+            nrows = (steps + 1) // max_cols + 1
+            ncols = min(steps + 1, max_cols)
+            fig, axs = plt.subplots(nrows, ncols, figsize=(ncols, nrows))
+            for k, ax in enumerate(axs.flatten()):
+                if k < steps + 1:
+                    ax.imshow(
+                        state_history[k].reshape(data.pattern_shape()), cmap="gray"
+                    )
+                    ax.set_title(f"$t = {k}$", loc="left", fontsize=8)
+                ax.axis("off")
+            fig.tight_layout()
+            fig.savefig(f"log/{log_file_basename}_{i}.png", bbox_inches="tight")
+            plt.close(fig)
 
         similarity = np.dot(original, net.get_state()) / (original**2).sum()
         result[j] = (name, steps, similarity)
