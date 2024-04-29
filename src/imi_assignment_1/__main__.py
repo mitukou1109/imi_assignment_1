@@ -3,6 +3,7 @@ from datetime import datetime
 
 import matplotlib
 import matplotlib.axes
+import matplotlib.backend_bases
 import matplotlib.gridspec
 import matplotlib.pyplot as plt
 import numpy as np
@@ -83,6 +84,12 @@ for i, noise_prob in enumerate(noise_probs):
                 )
                 energy_history_ax.autoscale_view()
 
+            def on_key_press(event: matplotlib.backend_bases.KeyEvent) -> None:
+                if event.key == "q":
+                    exit()
+
+            fig.canvas.mpl_connect("key_press_event", on_key_press)
+
         if save_state_history and j == 0:
             state_history = [net.get_state().copy()]
 
@@ -99,9 +106,9 @@ for i, noise_prob in enumerate(noise_probs):
             energy_history.append(energy)
 
             if visualize:
-                if plt.get_fignums():
-                    update_figure()
-                    plt.pause(0.05)
+                update_figure()
+                plt.pause(0.05)
+
             if save_state_history and j == 0:
                 state_history.append(net.get_state().copy())
 
