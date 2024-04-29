@@ -13,11 +13,11 @@ from .data_loader import DataLoader
 from .hopfield_network import HopfieldNetwork
 
 noise_probs = [0.2]
-attempts = 100
-visualize = True
-save_state_history = False
+attempts = 1000
+visualize = False
+save_state_history = True
 
-max_steps = 1e3
+max_steps = 1000
 energy_balance_duration = 100
 energy_balance_epsilon = 1e0
 similarity_epsilon = 1e-3
