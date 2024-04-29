@@ -29,6 +29,7 @@ data = DataLoader(sys.argv[1])
 net = HopfieldNetwork(data.pattern_size())
 
 net.set_weight(data().T @ data() / data.num_patterns())
+net.set_threshold(-data["1"] * 2.5)
 
 log_file_basename = datetime.now().strftime("%Y%m%d_%H%M%S")
 
@@ -148,6 +149,7 @@ for i, noise_prob in enumerate(noise_probs):
     log_header = (
         f"Trained patterns: {data.pattern_names()}, Noise probability: {noise_prob}"
         f"\nAverage similarity: {similarity_average}, accuracy: {accuracy}"
+        f"\nThreshold: {net.get_threshold()}"
     )
 
     np.savetxt(
