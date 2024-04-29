@@ -14,7 +14,7 @@ from .hopfield_network import HopfieldNetwork
 
 noise_probs = [0.2]
 attempts = 100
-visualize = False
+visualize = True
 save_state_history = False
 
 max_steps = 1e3
@@ -74,7 +74,7 @@ for i, noise_prob in enumerate(noise_probs):
             energy_history_ax.set_xlabel("Time")
             energy_history_ax.set_ylabel("Energy")
 
-            def update_figure():
+            def update_figure() -> None:
                 net_state_img.set_data(net.get_state().reshape(data.pattern_shape()))
                 energy_history_line.set_data(
                     np.arange(len(energy_history)), energy_history
