@@ -12,7 +12,7 @@ from . import transforms
 from .data_loader import DataLoader
 from .hopfield_network import HopfieldNetwork
 
-noise_probs = [0.2]
+noise_probs = [0.1]
 attempts = 1000
 visualize = False
 save_state_history = True
@@ -29,7 +29,7 @@ data = DataLoader(sys.argv[1])
 net = HopfieldNetwork(data.pattern_size())
 
 net.set_weight(data().T @ data() / data.num_patterns())
-net.set_threshold(-data["1"] * 2.5)
+# net.set_threshold(-data["1"] * 2.5)
 
 log_file_basename = datetime.now().strftime("%Y%m%d_%H%M%S")
 
