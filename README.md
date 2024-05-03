@@ -16,10 +16,10 @@ $ pip install -r requirements.lock   # その他
 2. モジュールを実行
 ```
 # ryeが使用可能な場合
-$ rye run python -m imi_assignment_1
+$ rye run python -m imi_assignment_1 <path to image directory>
 
 # その他
-$ python -m imi_assignment_1
+$ python -m imi_assignment_1 <path to image directory>
 ```
 
 # プログラムについて
